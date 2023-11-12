@@ -1,0 +1,34 @@
+% Define the ODE system
+odeSystem = @(t, y) [y(2); k/(1 + y(1))^2 - y(1)];
+
+% Initial conditions
+initialConditions = [initial_x; initial_v];
+
+% Parameters
+k = 2;  % You can adjust this value based on your system
+
+% Time span for the simulation
+tspan = [0 10];  % Adjust the time span as needed
+
+% Solve the ODEs using ode45
+[t, sol] = ode45(odeSystem, tspan, initialConditions);
+
+% Extract the solutions
+x_solution = sol(:, 1);
+v_solution = sol(:, 2);
+
+% Plot the results
+figure;
+subplot(2, 1, 1);
+plot(t, x_solution, 'LineWidth', 2);
+title('Position (x) vs Time');
+xlabel('Time');
+ylabel('Position');
+
+subplot(2, 1, 2);
+plot(t, v_solution, 'LineWidth', 2);
+title('Velocity (v) vs Time');
+xlabel('Time');
+ylabel('Velocity');
+
+% Add any additional formatting or analysis as needed
