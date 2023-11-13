@@ -1,0 +1,21 @@
+function solve_pull_in_model()
+    % Parameters
+    k = 0.3;  % Choose a value greater than 1/8
+    tspan = [0 10];  % Time span for the simulation
+    initial_conditions = [0; 0];  % Initial position and velocity
+
+    % Solve the differential equation
+    options = odeset('RelTol', 1e-6, 'AbsTol', 1e-9);  % Optional settings
+    [t, y] = ode45(@equations_of_motion, tspan, initial_conditions, options, k);
+
+    % Plot the results
+    figure;
+    plot(t, y(:, 1), 'LineWidth', 1.5);
+    xlabel('Time');
+    ylabel('Displacement (x)');
+    title('Numerical Solution of x'''' + x = k/(1+x)^2');
+
+    function dydt = equations_of_motion(t, y, k)
+        dydt = [y(2); k./(1 + y(1)).^2 - y(1)];
+    end
+end
