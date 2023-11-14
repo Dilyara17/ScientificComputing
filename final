@@ -1,0 +1,32 @@
+m = 1;          
+k = 1;         
+epsilon_0 = 1;  
+A = 1;          
+g_0 = 1;        
+V = 1;          
+
+ode = @(t, y) [y(2); (epsilon_0 * A * V^2) / (2 * (g_0 - y(1))) - (k / m) * y(1)];
+initialConditions = [0; 0];  % Initial displacement and velocity
+tspan = [0 10];  % Time span for simulation
+
+% Solve the Differential Equation using ode45
+[t, y] = ode45(ode, tspan, initialConditions);
+
+% Plot Displacement vs. Time
+figure;
+subplot(2, 1, 1);
+plot(t, y(:, 1), 'LineWidth', 2);
+title('Displacement vs. Time');
+xlabel('Time');
+ylabel('Displacement');
+
+% Plot Voltage vs. Displacement Relationship
+subplot(2, 1, 2);
+voltage = @(x) (epsilon_0 * A * V^2) ./ (2 * (g_0 - x));  % Use element-wise division
+displacements = linspace(0, g_0 - 0.1, 100);  % Adjust range for better visualization
+plot(displacements, voltage(displacements), 'LineWidth', 2);
+title('Voltage vs. Displacement Relationship');
+xlabel('Displacement');
+ylabel('Voltage');
+
+grid on;
