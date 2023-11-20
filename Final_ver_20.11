@@ -1,0 +1,47 @@
+V = linspace(0, 10, 1000);
+
+K1 = @(V) 1/2 - (54 * V.^2)* 1/8;
+K2 = @(V) 10 - (54 * V.^2)* 1/8;
+
+% Plot the graph
+plot(V, K1(V), 'b', V, K2(V), 'r');
+xlabel('Voltage (V)');
+ylabel('Stability of the equilibrium (K)');
+title('Stability of Equilibrium vs Voltage');
+legend('K1 = 1/2 - (54V^{2})/8', 'K2 = 10 - (54V^{2})/8');
+grid on;
+
+% Given analytical value of V
+analytical_V = sqrt(4/27);
+
+% Find the voltage for K = 0
+% Use fzero to find the roots of the equations
+V_solution_1 = fzero(K1, 1); % Adjust the initial guess if needed
+V_solution_2 = fzero(K2, 2); % Adjust the initial guess if needed
+
+% Calculate relative errors for both cases
+relative_error_K1 = abs(V_solution_1 - analytical_V) / analytical_V * 100;
+relative_error_K2 = abs(V_solution_2 - analytical_V) / analytical_V * 100;
+
+fprintf('Analytical Voltage (V): %.6f\n', analytical_V);
+fprintf('Max Stable Voltage for K = 1/2 (V): %.6f\n', V_solution_1);
+fprintf('Relative Error for K = 1/2: %.6f%%\n', relative_error_K1);
+
+fprintf('Max Stable Voltage for K = 10 (V): %.6f\n', V_solution_2);
+fprintf('Relative Error for K = 10: %.6f%%\n', relative_error_K2);
+
+% Check if K = 1/2 passes or fails the relative error test
+threshold = 30; % Threshold for relative error
+
+if relative_error_K1 < threshold
+    fprintf('K = 1/2 passes the relative error test (Relative Error < %d%%)\n', threshold);
+else
+    fprintf('K = 1/2 fails the relative error test (Relative Error >= %d%%)\n', threshold);
+end
+
+% Check if K = 10 passes or fails the relative error test
+if relative_error_K2 < threshold
+    fprintf('K = 10 passes the relative error test (Relative Error < %d%%)\n', threshold);
+else
+    fprintf('K = 10 fails the relative error test (Relative Error >= %d%%)\n', threshold);
+end
