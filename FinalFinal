@@ -15,8 +15,8 @@ grid on;
 analytical_V = sqrt(4/27);
 
 % Find the voltage for K = 0 using fzero
-V_solution_1 = fzero(K1_func, 1); % Adjust the initial guess if needed
-V_solution_2 = fzero(K2_func, 2); % Adjust the initial guess if needed
+V_solution_1 = fzero(K1_func, 1);
+V_solution_2 = fzero(K2_func, 2);
 
 % Calculate relative errors for both cases
 relative_error_K1 = abs(V_solution_1 - analytical_V) / analytical_V * 100;
